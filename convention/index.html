@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Conventions - InfoParse</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../doxygen/">InfoParse</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="..">Home</a>
+</li>
+                                    
+<li >
+    <a href="../installation/">Installation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../api/">API</a>
+</li>
+                                    
+<li >
+    <a href="../parsing/">Parsing rules</a>
+</li>
+                                    
+<li >
+    <a href="../conf/">Config</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">Conventions</a>
+</li>
+                                    
+<li >
+    <a href="../build/">Build it yourself</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../doxygen/">Doxygen</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../conf/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../build/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#conventions">Conventions</a></li>
+        <li class="main "><a href="#naming">Naming</a></li>
+        <li class="main "><a href="#macros">Macros</a></li>
+            <li><a href="#_pure">_pure</a></li>
+            <li><a href="#_retpure">_retpure</a></li>
+            <li><a href="#_retval">_retval</a></li>
+            <li><a href="#unlessx">unless(x)</a></li>
+            <li><a href="#untilx">until(x)</a></li>
+        <li class="main "><a href="#class-declaration-layout">Class declaration layout</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="conventions">Conventions</h1>
+<p>The info::parse source uses some standard-ish conventions. These
+are not that intrusive after getting used them. 
+The followings describe what these are and what they are doing, as
+some are a bit cryptic on first sight for those not necessarily 
+well versed in the C++ language's abusability. </p>
+<h1 id="naming">Naming</h1>
+<ul>
+<li>Variable names are <code>camelCase</code></li>
+<li>Normal macros are <code>SCREAMING_SNAKE_CASE</code></li>
+<li>Macros that are applied to something like a function are <code>_lowercase</code></li>
+<li>Class names are <code>PascalCase</code></li>
+<li>Classes that behave like interfaces are <code>PascalCase</code> and are an adjective, 
+ like the Java convention for interfaces.</li>
+<li>Member variables are <code>_camelCase</code>, while prefering single-word names,
+ if possible, of course.</li>
+<li>Accessor member functions are the name of the member variable without
+ the leading underscore</li>
+<li>Accessor member functions are the name of the member variable without
+ the leading underscore, while taking a parameter of the approriate type</li>
+<li>static and/or non-member functions are <code>PascalCase</code> </li>
+<li>Namespace of the project is <code>info::parse</code>, implementation details inside
+ the <code>detail</code> subnamespace.</li>
+</ul>
+<h1 id="macros">Macros</h1>
+<p>The following preprocessor macros are found inside the source code
+upon closer inspection. While these would mostly not be required for 
+the program to be functional or even get compiled I use them because I can. 
+Their names may or may not (they do) conflict with the language standard.</p>
+<h2 id="_pure"><code>_pure</code></h2>
+<h3 id="usage">Usage</h3>
+<p>The <code>_pure</code> macro is used to declare functions pure in a sense they 
+shall always return the same value on the same input and never disturb
+state which is visible by other parts of the same program. 
+The return value of these functions is always supposed to be used 
+for something as that is their only option for output. 
+Discarding their return value is equivalent of them not being called,
+and while compilers are not going to be aggressive enough to just
+optimize the function call away, they will warn if you waste resources,
+by calling these function without using their return value.</p>
+<h3 id="implementation">Implementation</h3>
+<p>If applicable this applies the C++17 <code>[[nodiscard]]</code> attribute,
+and iff using GCC or clang <code>[[gnu::const]]</code>.
+On a GCC compiler before C++11 this applies <code>__attribute__((const))</code>.</p>
+<h2 id="_retpure"><code>_retpure</code></h2>
+<h3 id="usage_1">Usage</h3>
+<p>The <code>_retpure</code> macro provides a weaker guarantee compared to the <code>_pure</code>
+macro in such a way it need not be deterministic. It's return value
+is pure so it doesn't write any other piece of memory, but it may return
+different values on sequential calls. It also suggests the requirement
+of use of the returned value, as that can be the sole reason for 
+getting called since no other state changes in the program.
+The best example is a getter; chances are the return value is why
+the getter got called, yet if calling them in such a way the object's 
+internal state changes they do not behave deterministically. 
+See this example:</p>
+<pre><code class="objectivec">#include &lt;iostream&gt;
+
+#define _retpure &quot;&lt;see actual code in utils.hpp&gt;&quot;;
+
+class Foo {
+    /// Interface
+public:
+    _retpure int getBar() const {
+        return bar;
+    }
+    void changeState() {
+        bar += (bar + 1) * (bar + 1); 
+    }
+
+    /// Fields
+private:
+    int bar = 0;
+};
+
+int main() {
+    Foo foo;
+    std::cout &lt;&lt; foo.getBar() &lt;&lt; std::endl; // 0
+    foo.changeState();
+    std::cout &lt;&lt; foo.getBar() &lt;&lt; std::endl; // 1
+    foo.changeState();
+    std::cout &lt;&lt; foo.getBar() &lt;&lt; std::endl; // 5
+
+    return 0;
+}
+</code></pre>
+
+<p>The <code>Foo#getBar()</code> doesn't change any other value apart it's return,
+yet even calling it on the same thread is not guaranteed to return the same.  </p>
+<h3 id="implementation_1">Implementation</h3>
+<p>If applicable this applies the C++17 <code>[[nodiscard]]</code> attribute,
+and iff using GCC or clang <code>[[gnu::pure]]</code>.
+On a GCC compiler before C++11 this applies <code>__attribute__((pure))</code>.</p>
+<h2 id="_retval"><code>_retval</code></h2>
+<h3 id="usage_2">Usage</h3>
+<p>The <code>_retval</code> macro is not as radical as the <code>_pure</code> or <code>_retpure</code> but is
+on the same alignment. It means the returned value is most likely 
+supposed to be used, however, the function itself is not <code>_pure</code> or even
+<code>_retpure</code>. Example is a member method which changes state in the object,
+yet returns some useful value. Most non-void functions that are not
+either <code>_pure</code> or <code>_retpure</code> are <code>_retval</code>.</p>
+<h3 id="implementation_2">Implementation</h3>
+<p>If using C++17 or greater <code>[[nodiscard]]</code> otherwise nothing.</p>
+<h2 id="unlessx"><code>unless(x)</code></h2>
+<p><code>if (!(x))</code>, no (diagnostic) explanation needed.</p>
+<h2 id="untilx"><code>until(x)</code></h2>
+<p><code>while (!(x))</code>, no (diagnostic) explanation needed. </p>
+<h1 id="class-declaration-layout">Class declaration layout</h1>
+<p>All classes try to follow the following convention of class 
+layouts. Parts may be missing according to required usage of the class,
+for example a trivially constructable &amp; destructable classes
+may leave out the <code>Contstructors &amp; destructor</code> and <code>Operators</code> parts.</p>
+<pre><code class="objectivec">class Name : public GreatClass,
+             public virtual Abolishable {
+    /// Interface
+public:
+    /* Public and/or static methods */
+
+    /// Lifecycle
+public:
+    Name() = default;
+    Name(const Name&amp; cp) = default;
+    Name(Name&amp;&amp; mv) noexcept = default;
+
+    virtual ~Name() = default;
+
+    /// Operators
+public:
+    Name&amp; operator=(const Name&amp; cp) = default;
+    Name&amp; operator=(Name&amp;&amp; mv) noexcept = default;
+
+    /// Fields
+private:
+    /* Fields */
+
+    /// Methods
+private: 
+    /* Internal methods */
+};
+</code></pre>
+
+<p>Classes before this schema was finalized currently as <code>InfoSoft CodeStyle C++ 2.1</code>,
+may not use any kind of noticeable schema, or use <code>InfoSoft CodeStyle C++ 1.x</code>.
+Differences to <code>1.x</code> are:</p>
+<ul>
+<li>Fields are not denoted explicitly until <code>1.3</code></li>
+<li>Fields are the first thing in the class in <code>1.x</code></li>
+<li>Until <code>1.2</code> different groups were created for static, public, inherited, implemented, etc
+   methods</li>
+<li>Group names were using only two slashes and were put after the accesiblity modifier on the same line
+ like so: <code>public: // Implemented public methods</code></li>
+</ul>
+<p>Difference to <code>2.0</code> is:</p>
+<ul>
+<li><code>/// Lifecycle</code> was <code>/// Constructor(s?) (&amp; destructor)?</code></li>
+</ul>
+<p>Transitioning old schemas into the new one is curently in </p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

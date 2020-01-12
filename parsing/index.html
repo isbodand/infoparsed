@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Parsing rules - InfoParse</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../doxygen/">InfoParse</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="..">Home</a>
+</li>
+                                    
+<li >
+    <a href="../installation/">Installation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../api/">API</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Parsing rules</a>
+</li>
+                                    
+<li >
+    <a href="../conf/">Config</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../convention/">Conventions</a>
+</li>
+                                    
+<li >
+    <a href="../build/">Build it yourself</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../doxygen/">Doxygen</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../api/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../conf/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#parsing-rules">Parsing Rules</a></li>
+        <li class="main "><a href="#boolean-flags">Boolean Flags</a></li>
+            <li><a href="#raw-flags">Raw flags</a></li>
+            <li><a href="#negated-flags">Negated flags</a></li>
+            <li><a href="#flags-with-values">Flags with values ?!</a></li>
+        <li class="main "><a href="#value-taking-options">Value taking options</a></li>
+            <li><a href="#direct-value">Direct value</a></li>
+            <li><a href="#optional-space">Optional space</a></li>
+            <li><a href="#assignments">Assignments</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="parsing-rules">Parsing Rules</h1>
+<p>Of course the most important factor of a parameter parser library is
+how it parses the parameters: which options are allowed?; does it support
+archaic stuff like the <code>+name</code> notation?; how customizable is it?;
+DOS-like <code>/name</code> support? This section defines how the currently, opposing
+my general ideology of the most general code being the best, quite
+python-y parsing engine works, which really needs heavy rework in
+regard to configuration the interface provides. 
+(The answers to the above asked questions if you happen to suffer in
+notansweredquestionphobia:
+short POSIX <code>-f</code> and long parameters <code>--facilitate-destruction-of-humanity</code>; 
+No.; Not much.; No. - As you can see, quite a bad record.)</p>
+<h1 id="boolean-flags">Boolean Flags</h1>
+<p>Boolean flags return either true or false. They do not take meaningful
+parameters, or the value they take is coerced into true or false according
+to a very perl-y truthyness table. They are initiated by creating an 
+option with a non-nullptr <code>bool</code> pointer for the value spit back parameter.</p>
+<h2 id="raw-flags">Raw flags</h2>
+<p>As boolean flags are the easiest thing to parse, as they do (= should) not 
+take a value to be parsed. As all options both have a short and a long name,
+flags do as well; <code>--&lt;flag&gt;</code> and <code>-&lt;f&gt;</code> are parsed and the spit back value 
+is a bool whether they were found in the input string or not.</p>
+<p>That's easy to reason about. This is where the shady parts come in.</p>
+<h2 id="negated-flags">Negated flags</h2>
+<p>All long flags are also possible to be parsed in their negated form,
+which is <code>--no-&lt;flag&gt;</code>. If this flag is found the option spits back a false value
+into the pointer. Each flag or parameter is only parsed once, unless
+specified otherwise, so the first flag wins and the others will be
+left there as is, since they were not to be removed by anything.</p>
+<h2 id="flags-with-values">Flags with values ?!</h2>
+<p>Of course a library has to do something with high levels of bodandness
+to become an InfoSoft solution. So boolean can take values as described 
+later and the parsed value is checked for truthyness according to the followings:</p>
+<p>1) Literals: <code>Yes</code> &amp; <code>True</code> are true, <code>No</code> &amp; <code>False</code> are false.
+[Note: Literals are case insensitive.]</p>
+<p>2) Numbers: True unless equals to zero.
+0 is false, while -12, 69 and 420 are true.</p>
+<p>3) Strings: True unless only consists of whitespace or is the empty string.
+"", "   ", "\n\t\n" are false while "a", "text text text", "bodand" are true.</p>
+<p>Literals are tried first, if those do not match, 
+then numbers are checked; if a string begins with at least one digit,
+<code>atoi</code> does its job on it and then numeric truthyness check if performed.
+So the string "0text" is false however true it is according to stringic (?)
+truthyness.</p>
+<p>A good example for this behaviour, invocation-wise, is using this in
+a shell script for optional flags without needing branching.</p>
+<pre><code class="shell">which wget 2&gt;/dev/null
+</code></pre>
+
+<p>This snipped prints the path at which <code>wget</code> is found or the empty string.
+Using this as a parameter for a flag can make an optional parameter if 
+<code>wget</code> is found.</p>
+<pre><code class="shell">./prog --use-wget=$(which wget 2&gt;/dev/null)
+</code></pre>
+
+<p>This will set <code>--use-wget</code> is <code>wget</code> was found, and to false otherwise.</p>
+<h1 id="value-taking-options">Value taking options</h1>
+<p>There exist, of course, values whose job is to take actual meaningful
+parameters and pass them into the program. These values compared to
+the values taken by boolean flags do actually show up in the library's
+caller program, unless, of course, an option is defined to dump into <code>nullptr</code>.</p>
+<h2 id="direct-value">Direct value</h2>
+<p>Options take the value that immediately succeed them, so care must be
+taken when deciding which option to add before the other. For example:
+Our options are <code>--text</code> and <code>--text-overlay</code>. If <code>--text</code> is registered
+first <code>--text-overlay</code> will never match:</p>
+<pre><code class="plain">Params -&gt; &quot;text text text --text-overlay=Cocaine text text&quot;
+--text matches there      ^^^^^^
+--text will use the value       ^^^^^^^^^^^^^^^^ 
+</code></pre>
+
+<p>However, if <code>--text-overlay</code> was registered first, the wanted behavior
+would happen, and <code>--text-overlay</code> would be set to <code>Cocaine</code>.</p>
+<p>The value absorbed equals to the value split up by the local shell,
+so if using quotes or apostrophes, then spaces are viable, otherwise
+the value spans to the next whitespace character, or the end of string.</p>
+<h2 id="optional-space">Optional space</h2>
+<p>Compared to the quite barbaric looking way of gluing together the option
+and its value, a more aesthetic way of doing things is by splitting them
+up with a space. This space when parsing happens is disregarded and the
+value is taken as if the flags name were to include that space. So
+<code>--textAbsorption</code> and <code>--text Absorption</code> are equal.</p>
+<h2 id="assignments">Assignments</h2>
+<p>Assignments look cool, so they are regarded as the most important 
+part of parameter parsing and using options with in InfoParse.
+Compared to this rich (although confusing at first) behavior presented
+no other implementation offers such freedom of supplying parameters.</p>
+<h3 id="equals-sign">Equals sign</h3>
+<p>This is the common behavior on most programs thus the common
+notation is bestowed to it: <code>--&lt;option&gt;=&lt;val&gt;</code>, without allowing
+spaces before the <code>&lt;val&gt;</code>. Short options allow for this as well, in 
+the form of <code>-&lt;short&gt;=&lt;val&gt;</code>. </p>
+<p>After finding an option's name; if the following character is an equals sign,
+the following are parsed as a value for the flag until the next space.
+This means <code>--&lt;option&gt;=</code> parses the value as the empty string.</p>
+<h3 id="colon">Colon</h3>
+<p>While having an equals sign or a colon might seem like a trivial difference
+for InfoParse it is not. While an equals sign is lazy to do any more work
+than necessary, the colon searches for the match with her extreme energy
+reserves, and disregards the amount of whitespace between her and her prey.</p>
+<p>The parser after finding an option's name followed by a colon (':'), seeks out 
+the first non-whitespace character then the next whitespace character,
+between those is the value to use for whatever.</p>
+<p>[Note: The colon can still return the empty string if she is at the end 
+of the string as there is hardly anything to seek. The idea that is should
+loop around was discarded for it would be too confusing]</p>
+<p>The differences are presented here:</p>
+<pre><code class="plain">&quot;text --wordval?&quot;   -&gt; &quot;val?&quot; &amp; &quot;text &quot; (1)
+&quot;text --word val?&quot;  -&gt; &quot;val?&quot; &amp; &quot;text &quot;
+&quot;text --word=val?&quot;  -&gt; &quot;val?&quot; &amp; &quot;text &quot;
+&quot;text --word= val?&quot; -&gt; &quot;&quot;     &amp; &quot;text val?&quot;
+&quot;text --word=&quot;      -&gt; &quot;&quot;     &amp; &quot;text &quot;
+&quot;text --word:val?&quot;  -&gt; &quot;val?&quot; &amp; &quot;text &quot;
+&quot;text --word: val?&quot; -&gt; &quot;val?&quot; &amp; &quot;text &quot;
+&quot;text --word:&quot;      -&gt; &quot;&quot;     &amp; &quot;text &quot;
+</code></pre>
+
+<p>[Note: Boolean flags do not take the value that directly follows
+them so <code>(1)</code> is not legal if <code>--word</code> takes a boolean.]</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Build it yourself - InfoParse</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../doxygen/">InfoParse</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="..">Home</a>
+</li>
+                                    
+<li >
+    <a href="../installation/">Installation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../api/">API</a>
+</li>
+                                    
+<li >
+    <a href="../parsing/">Parsing rules</a>
+</li>
+                                    
+<li >
+    <a href="../conf/">Config</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../convention/">Conventions</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Build it yourself</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../doxygen/">Doxygen</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../convention/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../doxygen/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#prerequisites">Prerequisites</a></li>
+        <li class="main "><a href="#downloading-sources">Downloading Sources</a></li>
+            <li><a href="#git">git</a></li>
+            <li><a href="#tarball">Tarball</a></li>
+            <li><a href="#zip">zip</a></li>
+        <li class="main "><a href="#configuring-cmake">Configuring CMake</a></li>
+        <li class="main "><a href="#calling-the-build-tool">Calling the build tool</a></li>
+            <li><a href="#cmake">CMake</a></li>
+            <li><a href="#calling-the-tool-itself">Calling the tool itself</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="prerequisites">Prerequisites</h1>
+<p>The following are required for the ability to build infoparse:</p>
+<ul>
+<li>A C++17 compliant C++ compiler 
+  [Note: According to their docs this means GCC 7+, clang 3.9+ ]
+  [Note: Currently I cannot guarantee that MSVC works. On my system
+  it shits itself quite badly.]
+  [Note: While GCC 7+ and clang 3.9+ can compile the library, 
+  the tests require GCC 9+ or clang 5+.]</li>
+<li>CMake 3.10+</li>
+</ul>
+<p>A <code>make</code> implementation is most likely necessary as well.
+Or maybe not if you use <code>ninja</code>, I don't know, but normally
+it is.</p>
+<h1 id="downloading-sources">Downloading Sources</h1>
+<p>Our hopefully painless journey of building infoparse
+starts with loading the required supplies aka downloading the source.
+The followings describe the most common ways this can be done.</p>
+<h2 id="git">git</h2>
+<p>The sources are available on github, so
+you can pull them using <code>git</code>:</p>
+<pre><code class="bash">git clone https://github.com/isbodand/infoparse.git
+</code></pre>
+
+<h2 id="tarball">Tarball</h2>
+<p>If for whatever reason using git is not possible
+you can resort to the good ol' <code>curl</code> and <code>tar</code> combo.</p>
+<pre><code class="bash">curl -Ls https://github.com/isbodand/infoparse/archive/master.tar.gz | tar xz
+</code></pre>
+
+<p>This will create a <code>infoparse-master</code> directory with the sources for info::parse. 
+[Note: Checksums are not provided by GitHub so don't need to be angry at me for
+not checking them. If you don't want to download things without a checksum
+use the <a href="#git">git</a> method.]</p>
+<h2 id="zip">zip</h2>
+<p>If you happen to be stuck on a Windows PC without the required tooling to
+get yourself <code>curl</code> and/or <code>tar</code>. 
+You can try any of the following options to get yourself info::parse:</p>
+<h3 id="powershell">PowerShell</h3>
+<pre><code class="powershell">PS&gt; Invoke-Webrequest https://github.com/isbodand/infoparse/archive/master.zip -OutFile infoparse.zip
+PS&gt; Expand-Archive infoparse.zip 
+</code></pre>
+
+<h3 id="cmd">cmd</h3>
+<p>If you are running and inferior version of Windows and don't have access to PS
+or you broke it at some point in time:</p>
+<pre><code class="cmd">bitsadmin /transfer info::parseDownload /priority high https://github.com/isbodand/infoparse/archive/master.zip %home%/Downloads/infoparse.zip
+</code></pre>
+
+<p>If using cmd you have no build-in way of unzipping files, so figuring out this is left 
+as an exercise to the reader, possible procedures range from <code>7z</code> to abusing <code>jar</code>. </p>
+<h1 id="configuring-cmake">Configuring CMake</h1>
+<p>After you got yourself the source, you need to tell cmake to configure it.
+This is done it 2 steps:</p>
+<p>1) Creating a build directory</p>
+<pre><code class="bash">mkdir build &amp;&amp; cd build
+</code></pre>
+
+<p>2) Calling CMake</p>
+<pre><code class="bash">cmake ..
+</code></pre>
+
+<h1 id="calling-the-build-tool">Calling the build tool</h1>
+<p>The previous command created the required files for the build tool to build
+infoparse, one just needs to call it. TIMTOWDI is in effect; here are your options:</p>
+<h2 id="cmake">CMake</h2>
+<p>CMake is able to call the required build tool for the configuration
+it generated. To do so just call:</p>
+<pre><code class="bash">cmake --build .
+</code></pre>
+
+<h2 id="calling-the-tool-itself">Calling the tool itself</h2>
+<p>This command varies by platform, here are a few, however if you are not
+sure which tool to call, just call through CMake as described above. </p>
+<ul>
+<li><code>make</code> for *nix people </li>
+<li><code>msbuild info::parse.sln</code> for MSVC</li>
+<li><code>mingw32-make</code> for MinGW </li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

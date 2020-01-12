@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Config - InfoParse</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../doxygen/">InfoParse</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="..">Home</a>
+</li>
+                                    
+<li >
+    <a href="../installation/">Installation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../api/">API</a>
+</li>
+                                    
+<li >
+    <a href="../parsing/">Parsing rules</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Config</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../convention/">Conventions</a>
+</li>
+                                    
+<li >
+    <a href="../build/">Build it yourself</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../doxygen/">Doxygen</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../parsing/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../convention/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#configurations">Configurations</a></li>
+            <li><a href="#info_retry_failed_callback_function">INFO_RETRY_FAILED_CALLBACK_FUNCTION</a></li>
+            <li><a href="#info_parser_fail_bad_function_silently">INFO_PARSER_FAIL_BAD_FUNCTION_SILENTLY</a></li>
+            <li><a href="#info_delete_return_value_of_callback">INFO_DELETE_RETURN_VALUE_OF_CALLBACK</a></li>
+            <li><a href="#info_use_build_time_in_version">INFO_USE_BUILD_TIME_IN_VERSION</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="configurations">Configurations</h1>
+<p>While InfoParse is not the most configurable of libraries; it 
+still offers some ability to be configured. </p>
+<p>Configuration is done by setting or defining specific macros before including
+any library header. The macros are listed in the followings, by
+describing the library's behavior in both cases whether or not the macro
+is defined. Parameters define the value it is supposed to be set.
+"Parameters: <code>none</code>" means only defined-ness(?) is checked. </p>
+<h2 id="info_retry_failed_callback_function">INFO_RETRY_FAILED_CALLBACK_FUNCTION</h2>
+<p>Parameters: <code>none</code><br />
+If defined the library once retries running a callback function, in
+case it is deemed to have failed. Failure conditions are described 
+<a href="/infoparsed/api#failure-and-success-conditions">here</a>. </p>
+<h2 id="info_parser_fail_bad_function_silently">INFO_PARSER_FAIL_BAD_FUNCTION_SILENTLY</h2>
+<p>Parameters: <code>none</code><br />
+If the callback takes more that 2 parameters the library upon realizing
+this when trying to call the function, throws a <code>bad_function_callback</code>
+exception. Note this is hardly required as OptionsParser static
+asserts less than or equal to 2 on it's input of addOption, so
+only needed if instantiating Option_ manually, which you shouldn't 
+be doing in the first place, so bear the consequences.</p>
+<h2 id="info_delete_return_value_of_callback">INFO_DELETE_RETURN_VALUE_OF_CALLBACK</h2>
+<p>Parameters: <code>none</code><br />
+If the callback function returns a pointer which is supposed to be
+deleted, for some ungodly reason, with this option the library
+will call <code>delete ptr</code>, where <code>ptr</code> is the value returned by the callback.
+Note that this is then called for every returned pointer.</p>
+<h2 id="info_use_build_time_in_version">INFO_USE_BUILD_TIME_IN_VERSION</h2>
+<p>Parameters: <code>1</code> or <code>0</code> whether yes or no; default is <code>1</code><br />
+Decides whether build time is to be shown in the version number of
+the library.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

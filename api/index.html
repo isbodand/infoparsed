@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>API - InfoParse</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../doxygen/">InfoParse</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="..">Home</a>
+</li>
+                                    
+<li >
+    <a href="../installation/">Installation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">API</a>
+</li>
+                                    
+<li >
+    <a href="../parsing/">Parsing rules</a>
+</li>
+                                    
+<li >
+    <a href="../conf/">Config</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../convention/">Conventions</a>
+</li>
+                                    
+<li >
+    <a href="../build/">Build it yourself</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../doxygen/">Doxygen</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../installation/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../parsing/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#api">API</a></li>
+            <li><a href="#include">Include</a></li>
+            <li><a href="#construction">Construction</a></li>
+            <li><a href="#options">Options</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="api">API</h1>
+<p>The API is pretty easy to handle, this combined with
+my madness complicated the implementation, but never mind that.
+Only one class is present in the <code>info::parse</code> namespace, others are 
+<code>info::parse::Internals</code> namespace which, you'd never guess it, is for
+internal use. </p>
+<h2 id="include">Include</h2>
+<p>The library - if installed correctly and not butchered like how I usually
+install stuff - has its directory called <code>infoparse</code>, where
+all headers reside. Therefrom do you need to include </p>
+<h2 id="construction">Construction</h2>
+<p>This only class is <code>OptionsParser</code>. As of <code>1.4.0</code>, this class
+is default constructed, so you can easily just pop it wherever you want:
+[Note: For the followings <code>IP</code> is an alias to namespace <code>info::parse</code>.]</p>
+<pre><code class="objectivec">IP::OptionsParser parser;
+</code></pre>
+
+<p>And with that your parser is constructed, but not much happened, not 
+even internally. </p>
+<h2 id="options">Options</h2>
+<p>To actually get something going we need to input the options which are
+to be parsed. This can be done in the two following ways, and a third 
+one is to arrive in a following update soon(tm). 
+The first and original way is to add the options by hand. This is a bit 
+tedious but compared to the migraine of writing JS it is nothing.</p>
+<h3 id="single">Single</h3>
+<pre><code class="objectivec">int i = 0; // Be good and initialize your variables
+parser.addOption(&quot;amazingly-great-option-name&quot;, &amp;i);
+bool silent = false;
+bool chain = false;
+parser.addOption(&quot;silent|quiet|s|q&quot;, &amp;silent)
+    .addOption(&quot;calls-can-be-chained&quot;, &amp;wget);
+</code></pre>
+
+<p>This method adds options one-by-one as the above example presents.
+<code>addOption</code> takes a <code>OptionString</code> (which is implicitly constructed from 
+<code>std::string</code>s or string literals, mind you) which parses the input string
+into the names of the parameters, by splitting the string on the pipes 
+<code>'|'</code>. Also note that <code>addOption</code> returns a reference to the 
+<code>IP::OptionsParser</code> which you called it from, so as shown on the second 
+and third call they can be chain called. [Note: Up to and including 
+<code>1.4.x</code> the return value was a pointer to the parser object.]</p>
+<h3 id="multiple">Multiple</h3>
+<pre><code class="objectivec">int i = 0; 
+bool silent = false;
+bool chain = false;
+parser.addOptions()
+    (&quot;easy|fast&quot;, &amp;i)
+    (&quot;sleek&quot;, &amp;silent)
+    (&quot;boost-like&quot;, &amp;wget)
+;
+</code></pre>
+
+<p>As found in some Boost libraries (such as Boost.ProgramOptions)
+this method of adding multiple options is a new and shiny feature since
+<code>1.4.0</code>. Their behaviour is exactly the same as if it were <code>addOption</code>
+called <code>n</code> times separately, and thus all documentation is 
+presented <a href="#single">there</a> .</p>
+<h3 id="functions">Functions</h3>
+<p>However mighty variables are, they are boring. Having functions as possible
+output variables definitely is not. 
+Since the glorious release of version <code>1.5.0</code>, using any kind of callable is
+a great way to specify callbacks to the parser system. 
+Works with function pointers, function objects and even lambdas.
+While values specify the type of the program parameter by their own type,
+lambdas, and function pointers do so with
+their parameter type.
+Callables may have some type <code>T</code> as their parameter iff <code>T</code> implements
+the streaming <code>operator&gt;&gt;</code>, or <code>void</code>:
+If their type is <code>T</code>, they will be called with an argument of type <code>T</code>,
+parsed from the program arguments; 
+if their type is <code>void</code> they will be called without any value being passed to them,
+as if the boolean value were to be encoded in the 
+fact that whether or not they are called.</p>
+<p>See this example of using function callbacks.  </p>
+<pre><code class="objectivec">#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+
+#include &lt;infoparse/OptionsParser.hpp&gt;
+
+[[noreturn]] void help();
+[[noreturn]] void version();
+
+int main(int argc, char** argv) { // K&amp;R braces All the way
+    // Setup
+    info::parse::OptionsParser parser;
+    parser.addOptions()
+        (&quot;help|h|?&quot;, help)
+        (&quot;version|v&quot;, version)
+        (&quot;lambda|l&quot;, [&amp;](const std::string&amp; str) {
+          std::cout &lt;&lt; str &lt;&lt; std::endl;
+        })
+    ;
+
+    // Parsing
+    auto rem = parser.parse(argc, argv);
+
+    // Whatever
+    std::cout &lt;&lt; &quot;Parameters: &quot; &lt;&lt; rem &lt;&lt; std::endl;
+
+    return 0;
+}
+
+void help() {
+    std::cout &lt;&lt; &quot;Example v1\n&quot;
+                 &quot;Usage: xmpl [options]\n&quot;
+                 &quot;  -h --help -?\tShow this message and exit\n&quot;
+                 &quot;  -v --version\tShow version and exit&quot;
+              &lt;&lt; std::endl;
+    std::exit(0);
+}
+
+void version() {
+    std::cout &lt;&lt; &quot;Example v1&quot; &lt;&lt; std::endl;
+    std::exit(0);
+}
+
+</code></pre>
+
+<h4 id="failure-and-success-conditions">Failure and success conditions</h4>
+<p>Depending on the <a href="/infoparsed/config">configuration</a> and on the
+function's return value, a function may be deemed to have succeeded or
+to have failed by the library upon calling the callback-function. 
+The failure and success conditions are as of the followings.</p>
+<p>1) A <code>void</code> function is always successful.<br />
+ 2) A function returning a pointer is successful if the returned
+     pointer is not <code>nullptr</code>. [Note: See 
+     <a href="/infoparsed/config#info_delete_return_value_of_callback">configs</a> 
+     for returned pointers that should be deleted.]<br />
+ 3) If the returned value is convertible to <code>int</code> the following
+    expression determines success: <code>((int) f(args...)) == 0</code> where
+    <code>f</code> is the callback function and <code>args...</code> are the parameters.<br />
+ 4) A function whose return value is convertible to <code>bool</code>, that equals
+    whether the function failed or not.<br />
+ 5) Any other case the function is hoped to have succeeded.  </p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

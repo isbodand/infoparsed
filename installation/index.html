@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Installation - InfoParse</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../doxygen/">InfoParse</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="..">Home</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Installation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../api/">API</a>
+</li>
+                                    
+<li >
+    <a href="../parsing/">Parsing rules</a>
+</li>
+                                    
+<li >
+    <a href="../conf/">Config</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Source <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../convention/">Conventions</a>
+</li>
+                                    
+<li >
+    <a href="../build/">Build it yourself</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../doxygen/">Doxygen</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="..">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../api/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#installation">Installation</a></li>
+            <li><a href="#conan">conan</a></li>
+            <li><a href="#infocdepend">InfoCDepend</a></li>
+            <li><a href="#build-it">Build it</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="installation">Installation</h1>
+<p>If you wish to use InfoParse, logically, you need to acquire a copy of it.
+This is achievable in some ways, two of which are presented here.</p>
+<h2 id="conan">conan</h2>
+<p>NOTE: The last released version is <code>1.5.2</code>. The advised way is now to use <a href="#InfoCDepend">InfoCDepend</a>.</p>
+<p>InfoParse uses <a href="htpps://conan.io">conan</a> as its dependency manager a packager.
+That means, we at InfoSoft gradually provide new InfoParse releases on our
+conan server, the latest of which is always recommended to be used.
+Our server is available at <code>conan.isdevnet.com</code> upon which InfoParse is
+published as <code>InfoParse/2.0.1@bodand/stable</code>.</p>
+<p>More in-depth documentation on using conan to get InfoParse follows for
+those not familiar with custom servers or with conan in general.
+[Note: We assume you already have a working copy of conan installed.
+To get conan look at their <a href="htpps://conan.io">website</a> for documentation.]</p>
+<h3 id="remote">Remote</h3>
+<p>InfoSoft's conan package repository is <code>conan.isdevnet.com</code>.
+To tell conan to search in this repository in addition to <code>conan-central</code>
+one needs to add it as a remote:</p>
+<pre><code class="shell">$ conan remote add InfoSoft-Conan-Server https://conan.isdevnet.com
+</code></pre>
+
+<p>[Note: The <code>InfoSoft-Conan-Server</code> is the server's local name thus it
+can be any arbitrary locally unique string.]</p>
+<p>To see if it worked you can preform a listing on the current remotes
+and search for InfoParse and even list all packages on our server.</p>
+<pre><code class="shell">$ conan remote list
+$ conan search InfoParse
+$ conan search -r InfoSoft-Conan-Server
+</code></pre>
+
+<h3 id="requirement">Requirement</h3>
+<p>If you searched for InfoParse in the last paragraph you saw what is
+the name you need to add as a requirement.</p>
+<p>Add <code>InfoParse/2.0.1@bodand/stable</code> to your conanfile.(py|txt) and conan
+shall automagically install the package for you by running</p>
+<pre><code class="shell">$ conan install . -if &lt;your_build_dir&gt; -b missing
+</code></pre>
+
+<h2 id="infocdepend">InfoCDepend</h2>
+<p>InfoSoft's in-house project dependency installer CMake script is available at
+<code>https://github.com/isbodand/InfoCDepend</code></p>
+<p>Using InfoCDepend you can locally install project dependencies for your projects:</p>
+<h3 id="get-infocdepend">Get InfoCDepend</h3>
+<p>The first step is to install the InfoCDepend script. Currently it does not,
+although future versions will update themselves so only one installation will
+be necessary.</p>
+<pre><code class="cmake"># InfoCDepend
+set(CDepend_FILE &quot;/home/travis/build/isbodand/infoparse/cmake/InfoCDepend.cmake&quot;)
+
+file(DOWNLOAD
+        https://raw.githubusercontent.com/isbodand/InfoCDepend/master/InfoCDepend.cmake
+        &quot;&quot;
+        )
+
+include(&quot;&quot;)
+</code></pre>
+
+<p>Make sure the path you are downloading to exists.</p>
+<h3 id="getdependency">GetDependency</h3>
+<p>After installing you local InfoCDepend script and included it, you can use it to
+get dependencies:</p>
+<pre><code class="cmake"># InfoParse
+GetDependency(InfoParse https://github.com/isbodand/infoparse.git)
+
+# other dependencies
+
+include_directories(libs/include)
+</code></pre>
+
+<p>And that is it. You now have InfoParse installed locally. With tremendous additional
+logging information no-one asked for.</p>
+<h2 id="build-it">Build it</h2>
+<p>You can build and install it on your local machine as described in the
+<a href="/infoparsed/build">appropriate documentation</a>.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
